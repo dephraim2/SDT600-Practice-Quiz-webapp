@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDT600 Terminology & Definitions Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        .timer-danger {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 to-teal-100 min-h-screen">
+    <div id="app"></div>
+
+    <script>
+        // Terminology & Definitions Quiz - 60 Questions, 60 Minutes
+        const QuizApp = {
+            questions: [
+                // Multiple Choice - Definitions (24 single-select questions)
+                {
+                    id: 1,
+                    type: 'mc-single',
+                    question: 'What is a "Project" in project management?',
+                    options: [
+                        'A temporary endeavor undertaken to create a unique product, service, or result',
+                        'An ongoing operational activity',
+                        'A permanent organizational structure',
+                        'A long-term strategic initiative'
+                    ],
+                    correct: [0],
+                    explanation: 'A project is temporary (has defined start and end), unique, and creates specific deliverables.'
+                },
+                {
+                    id: 2,
+                    type: 'mc-single',
+                    question: 'What is the primary difference between a Project and a Program?',
+                    options: [
+                        'Programs are smaller than projects',
+                        'Programs are groups of related projects managed together to achieve strategic objectives',
+                        'There is no difference',
+                        'Projects are managed at higher levels than programs'
+                    ],
+                    correct: [1],
+                    explanation: 'Programs are collections of related projects coordinated for greater benefit and strategic alignment.'
+                },
+                {
+                    id: 3,
+                    type: 'mc-single',
+                    question: 'What is Portfolio Management?',
+                    options: [
+                        'Managing individual projects only',
+                        'Managing a collection of projects and programs to achieve strategic business objectives',
+                        'Managing financial investments only',
+                        'Managing team resources'
+                    ],
+                    correct: [1],
+                    explanation: 'Portfolio management aligns all organizational initiatives with business strategy at the highest level.'
+                },
+                {
+                    id: 4,
+                    type: 'mc-single',
+                    question: 'Define "Project Management".',
+                    options: [
+                        'The process of managing a team',
+                        'The application of knowledge, skills, and techniques to project activities to meet project requirements',
+                        'Creating project budgets',
+                        'Assigning tasks to team members'
+                    ],
+                    correct: [1],
+                    explanation: 'Project management integrates planning, execution, monitoring, and control processes for project success.'
+                },
+                {
+                    id: 5,
+                    type: 'mc-single',
+                    question: 'What does "Digital Transformation" mean?',
+                    options: [
+                        'Replacing all manual processes with digital tools',
+                        'Using digital technology to fundamentally reshape how an organization operates and delivers value',
+                        'Creating a company website',
+                        'Implementing cloud storage'
+                    ],
+                    correct: [1],
+                    explanation: 'Digital transformation involves technology, process redesign, cultural change, and business model innovation.'
+                },
+                {
+                    id: 6,
+                    type: 'mc-single',
+                    question: 'What is "Digital Strategy"?',
+                    options: [
+                        'A plan to buy new computers',
+                        'A comprehensive plan defining how digital technology will be used to achieve business objectives and competitive advantage',
+                        'A technology implementation plan only',
+                        'A marketing strategy'
+                    ],
+                    correct: [1],
+                    explanation: 'Digital strategy aligns technology initiatives with overall business strategy and organizational goals.'
+                },
+                {
+                    id: 7,
+                    type: 'mc-single',
+                    question: 'What is the definition of "IS" (Information Systems)?',
+                    options: [
+                        'Internet Services',
+                        'Integrated Systems',
+                        'Information Systems - integrated set of components for collecting, processing, and delivering information to support decision-making',
+                        'IT Strategy'
+                    ],
+                    correct: [2],
+                    explanation: 'IS encompasses both technology and processes for managing organizational information and communications.'
+                },
+                {
+                    id: 8,
+                    type: 'mc-single',
+                    question: 'What is the definition of "IT" (Information Technology)?',
+                    options: [
+                        'Internet Technologies',
+                        'Information Technology - the technology and equipment used for storing, processing, and distributing information',
+                        'Internal Tools',
+                        'Integrated Technology'
+                    ],
+                    correct: [1],
+                    explanation: 'IT refers specifically to the technology infrastructure, hardware, software, and networks.'
+                },
+                {
+                    id: 9,
+                    type: 'mc-single',
+                    question: 'What is the key difference between IS and IT?',
+                    options: [
+                        'IS is about people; IT is about technology',
+                        'IS includes processes and business perspective; IT is the technology component',
+                        'They are identical terms',
+                        'IS is newer than IT'
+                    ],
+                    correct: [1],
+                    explanation: 'IS is broader (includes people, processes, strategy); IT is the technology foundation within IS.'
+                },
+                {
+                    id: 10,
+                    type: 'mc-single',
+                    question: 'Define "Governance" in the context of IT.',
+                    options: [
+                        'Managing IT staff only',
+                        'The framework and processes for directing and controlling IT activities to ensure alignment with business strategy',
+                        'Creating IT policies only',
+                        'Auditing IT expenses'
+                    ],
+                    correct: [1],
+                    explanation: 'IT governance ensures strategic alignment, accountability, and effective management of technology investments.'
+                },
+                {
+                    id: 11,
+                    type: 'mc-single',
+                    question: 'What is "Strategic Alignment"?',
+                    options: [
+                        'All departments using the same software',
+                        'The extent to which IT strategy and business strategy are integrated and mutually supportive',
+                        'Creating an organizational chart',
+                        'Assigning IT budgets'
+                    ],
+                    correct: [1],
+                    explanation: 'Strategic alignment ensures IT initiatives support and enable business objectives and competitive strategy.'
+                },
+                {
+                    id: 12,
+                    type: 'mc-single',
+                    question: 'What does "Business Process" mean?',
+                    options: [
+                        'A financial transaction',
+                        'A sequence of activities and decisions designed to produce a specific output for internal or external customers',
+                        'A management meeting',
+                        'An employee task'
+                    ],
+                    correct: [1],
+                    explanation: 'Business processes are structured sequences of activities that transform inputs into valuable outputs.'
+                },
+                {
+                    id: 13,
+                    type: 'mc-single',
+                    question: 'Define "Business Process Management" (BPM).',
+                    options: [
+                        'Managing employees',
+                        'Systematic approach to improving organizational efficiency by designing, executing, and optimizing business processes',
+                        'Creating organizational policies',
+                        'Financial management'
+                    ],
+                    correct: [1],
+                    explanation: 'BPM is a disciplined methodology for continuous process improvement and operational excellence.'
+                },
+                {
+                    id: 14,
+                    type: 'mc-single',
+                    question: 'What is "Earned Value" (EV)?',
+                    options: [
+                        'The actual money spent on a project',
+                        'The budgeted amount for work that has actually been completed',
+                        'The value of team members',
+                        'The price of project outputs'
+                    ],
+                    correct: [1],
+                    explanation: 'EV represents the budgeted value of completed work, measuring actual progress against the plan.'
+                },
+                {
+                    id: 15,
+                    type: 'mc-single',
+                    question: 'What is "Planned Value" (PV)?',
+                    options: [
+                        'The expected project profit',
+                        'The budgeted cost of work scheduled to be performed',
+                        'The actual project spending',
+                        'The final project cost'
+                    ],
+                    correct: [1],
+                    explanation: 'PV is the baseline budget for work that should be completed by a specific point in time.'
+                },
+                {
+                    id: 16,
+                    type: 'mc-single',
+                    question: 'What does "Scope Creep" mean?',
+                    options: [
+                        'A slow team',
+                        'Uncontrolled expansion of project scope without corresponding increases in time or budget',
+                        'Adding more team members',
+                        'Improving project quality'
+                    ],
+                    correct: [1],
+                    explanation: 'Scope creep occurs when project requirements expand without formal change control and resource adjustment.'
+                },
+                {
+                    id: 17,
+                    type: 'mc-single',
+                    question: 'Define "Stakeholder".',
+                    options: [
+                        'A person who holds company stock',
+                        'An individual or organization with interests or involvement in a project or initiative',
+                        'A senior manager only',
+                        'A customer only'
+                    ],
+                    correct: [1],
+                    explanation: 'Stakeholders include anyone affected by or who can affect the project (customers, employees, management, etc.).'
+                },
+                {
+                    id: 18,
+                    type: 'mc-single',
+                    question: 'What is "Change Management"?',
+                    options: [
+                        'Changing project schedules',
+                        'The structured approach to transitioning individuals, teams, and organizations through changes in processes and systems',
+                        'Modifying budgets',
+                        'Replacing team members'
+                    ],
+                    correct: [1],
+                    explanation: 'Change management ensures smooth transitions, minimizes resistance, and maximizes adoption of changes.'
+                },
+                {
+                    id: 19,
+                    type: 'mc-single',
+                    question: 'Define "Maturity Model".',
+                    options: [
+                        'A chart showing employee age',
+                        'A framework defining levels of organizational capability and process improvement from initial to optimized states',
+                        'A project timeline',
+                        'A budget plan'
+                    ],
+                    correct: [1],
+                    explanation: 'Maturity models provide a roadmap for organizational improvement across levels (e.g., CMM, COBIT).'
+                },
+                {
+                    id: 20,
+                    type: 'mc-single',
+                    question: 'What does "Risk Management" mean?',
+                    options: [
+                        'Avoiding all risks',
+                        'The process of identifying, analyzing, responding to, and monitoring risks throughout a project',
+                        'Eliminating project problems',
+                        'Reducing team anxiety'
+                    ],
+                    correct: [1],
+                    explanation: 'Risk management is a proactive process to identify potential issues and develop mitigation strategies.'
+                },
+                {
+                    id: 21,
+                    type: 'mc-single',
+                    question: 'What is a "Project Charter"?',
+                    options: [
+                        'A project schedule',
+                        'A formal document that authorizes the existence of a project and provides the project manager with authority to apply organizational resources',
+                        'A list of team members',
+                        'A budget document'
+                    ],
+                    correct: [1],
+                    explanation: 'The project charter is issued by senior management and formally authorizes the project and its objectives.'
+                },
+                {
+                    id: 22,
+                    type: 'mc-single',
+                    question: 'Define "Baseline" in project management.',
+                    options: [
+                        'The initial team structure',
+                        'The approved plan against which project performance is measured and controlled',
+                        'The project start date',
+                        'A budget estimate'
+                    ],
+                    correct: [1],
+                    explanation: 'Baselines (scope, schedule, cost) are approved plans used for measuring project progress and variances.'
+                },
+                {
+                    id: 23,
+                    type: 'mc-single',
+                    question: 'What is "Legacy Modernization"?',
+                    options: [
+                        'Making old systems look new',
+                        'Updating, refactoring, or replacing outdated IT systems with modern technology to meet current business needs',
+                        'Adding new features to old systems',
+                        'Retiring all old systems'
+                    ],
+                    correct: [1],
+                    explanation: 'Legacy modernization is a strategic approach to updating outdated systems while maintaining business continuity.'
+                },
+                {
+                    id: 24,
+                    type: 'mc-single',
+                    question: 'Define "Organizational Structure".',
+                    options: [
+                        'The physical building layout',
+                        'The arrangement of roles, responsibilities, and reporting relationships within an organization',
+                        'A project timeline',
+                        'A financial plan'
+                    ],
+                    correct: [1],
+                    explanation: 'Organizational structure defines how authority, responsibility, and communication flow throughout the organization.'
+                },
+
+                // Multi-Select Definitions (8 questions)
+                {
+                    id: 25,
+                    type: 'mc-multi',
+                    question: 'Which of the following are characteristics of a Project? (Select ALL that apply)',
+                    options: [
+                        'Temporary (has defined start and end)',
+                        'Creates unique product, service, or result',
+                        'Requires coordinated activities',
+                        'Is permanent and ongoing',
+                        'Has defined objectives and deliverables'
+                    ],
+                    correct: [0, 1, 2, 4],
+                    explanation: 'Projects are temporary, unique, coordinated efforts with defined objectives—not permanent operations.'
+                },
+                {
+                    id: 26,
+                    type: 'mc-multi',
+                    question: 'Which elements are included in "Digital Strategy"? (Select ALL that apply)',
+                    options: [
+                        'Technology selection and infrastructure',
+                        'Process redesign and optimization',
+                        'Organizational culture and change',
+                        'Competitive positioning through digital advantage',
+                        'Financial accounting methods only'
+                    ],
+                    correct: [0, 1, 2, 3],
+                    explanation: 'Digital strategy encompasses technology, people, processes, and business model transformation.'
+                },
+                {
+                    id: 27,
+                    type: 'mc-multi',
+                    question: 'Which of the following are components of IT Governance? (Select ALL that apply)',
+                    options: [
+                        'Strategic decision-making structures',
+                        'Performance metrics and monitoring',
+                        'Risk management frameworks',
+                        'Policy and procedure enforcement',
+                        'Employee salary decisions only'
+                    ],
+                    correct: [0, 1, 2, 3],
+                    explanation: 'Governance includes strategic decisions, metrics, risk management, and enforcing organizational policies.'
+                },
+                {
+                    id: 28,
+                    type: 'mc-multi',
+                    question: 'What are the key differences between IS and IT? (Select ALL that apply)',
+                    options: [
+                        'IS includes organizational processes; IT is technology infrastructure',
+                        'IS considers business context; IT is tool-focused',
+                        'IS involves people and change; IT is primarily technical',
+                        'IS is management-level; IT is only operations-level',
+                        'They are completely identical terms'
+                    ],
+                    correct: [0, 1, 2],
+                    explanation: 'IS is broader and business-focused; IT is the technology foundation enabling IS functions.'
+                },
+                {
+                    id: 29,
+                    type: 'mc-multi',
+                    question: 'Which of the following are typical stakeholder types? (Select ALL that apply)',
+                    options: [
+                        'Project sponsor',
+                        'End users',
+                        'Project team members',
+                        'External vendors and partners',
+                        'Only senior executives'
+                    ],
+                    correct: [0, 1, 2, 3],
+                    explanation: 'Stakeholders include diverse groups with interests in the project—not just executives.'
+                },
+                {
+                    id: 30,
+                    type: 'mc-multi',
+                    question: 'Which phases are part of Risk Management? (Select ALL that apply)',
+                    options: [
+                        'Risk identification',
+                        'Risk analysis and prioritization',
+                        'Risk response planning',
+                        'Risk monitoring and control',
+                        'Risk elimination completely'
+                    ],
+                    correct: [0, 1, 2, 3],
+                    explanation: 'Risk management includes identifying, analyzing, responding, and continuously monitoring risks.'
+                },
+                {
+                    id: 31,
+                    type: 'mc-multi',
+                    question: 'Which of the following are true about Programs? (Select ALL that apply)',
+                    options: [
+                        'Consist of related projects',
+                        'Managed to achieve strategic objectives',
+                        'Are smaller than projects',
+                        'Share resources and processes',
+                        'Always temporary like projects'
+                    ],
+                    correct: [0, 1, 3],
+                    explanation: 'Programs group related projects, manage them for strategic benefit, and may be long-term initiatives.'
+                },
+                {
+                    id: 32,
+                    type: 'mc-multi',
+                    question: 'What are the main purposes of a Project Charter? (Select ALL that apply)',
+                    options: [
+                        'Formally authorize the project',
+                        'Provide project manager authority',
+                        'Define high-level project objectives',
+                        'Establish project constraints',
+                        'Guarantee project success'
+                    ],
+                    correct: [0, 1, 2, 3],
+                    explanation: 'The charter authorizes the project, empowers the manager, and establishes baseline objectives and constraints.'
+                },
+
+                // True/False Definitions (16 questions)
+                {
+                    id: 33,
+                    type: 'tf',
+                    question: 'A Project is an ongoing, permanent organizational activity.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Projects are temporary with defined start and end dates.'
+                },
+                {
+                    id: 34,
+                    type: 'tf',
+                    question: 'Portfolio Management aligns all organizational initiatives with business strategy.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. Portfolio management ensures strategic alignment at the highest organizational level.'
+                },
+                {
+                    id: 35,
+                    type: 'tf',
+                    question: 'Digital Strategy is just about buying new technology.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Digital strategy involves technology, process redesign, culture change, and business model innovation.'
+                },
+                {
+                    id: 36,
+                    type: 'tf',
+                    question: 'IS (Information Systems) and IT (Information Technology) are identical terms.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. IS is broader (processes, people, strategy); IT is the technology component within IS.'
+                },
+                {
+                    id: 37,
+                    type: 'tf',
+                    question: 'IT Governance ensures alignment between technology and business strategy.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. Governance is the primary mechanism for strategic alignment and accountability.'
+                },
+                {
+                    id: 38,
+                    type: 'tf',
+                    question: 'Scope Creep is always beneficial to project outcomes.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Uncontrolled scope expansion causes delays, budget overruns, and quality issues.'
+                },
+                {
+                    id: 39,
+                    type: 'tf',
+                    question: 'Stakeholders are only external customers.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Stakeholders include anyone affected by or affecting the project (internal and external).'
+                },
+                {
+                    id: 40,
+                    type: 'tf',
+                    question: 'Change Management is only about changing project schedules.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Change management involves transitioning people and organizations through process/system changes.'
+                },
+                {
+                    id: 41,
+                    type: 'tf',
+                    question: 'A Maturity Model defines levels of organizational capability progression.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. Maturity models provide a framework for organizational improvement from initial to optimized states.'
+                },
+                {
+                    id: 42,
+                    type: 'tf',
+                    question: 'Risk Management means eliminating all risks completely.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Risk management involves identifying, analyzing, responding to, and monitoring risks—not eliminating them.'
+                },
+                {
+                    id: 43,
+                    type: 'tf',
+                    question: 'The Project Charter is issued by the project manager.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. The charter is issued by senior management to authorize the project and empower the manager.'
+                },
+                {
+                    id: 44,
+                    type: 'tf',
+                    question: 'A Baseline is a fixed plan that can never be changed.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Baselines can be updated through formal change control processes when circumstances change.'
+                },
+                {
+                    id: 45,
+                    type: 'tf',
+                    question: 'Business Processes are unstructured, random activities.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Business processes are structured, repeatable sequences of activities producing specific outputs.'
+                },
+                {
+                    id: 46,
+                    type: 'tf',
+                    question: 'Legacy Modernization means immediately replacing all old systems.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Legacy modernization is a strategic, incremental approach maintaining business continuity.'
+                },
+                {
+                    id: 47,
+                    type: 'tf',
+                    question: 'Organizational Structure defines how roles and responsibilities are arranged.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. Structure establishes reporting relationships, authority, and communication flows.'
+                },
+                {
+                    id: 48,
+                    type: 'tf',
+                    question: 'Business Process Management is a one-time activity.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. BPM is a continuous, systematic approach to process improvement and optimization.'
+                },
+
+                // Scenario-Based Definition Questions (12 questions)
+                {
+                    id: 49,
+                    type: 'scenario',
+                    question: 'A company is launching three related initiatives: migrating to cloud infrastructure, redesigning workflows, and training employees on new systems. How would you classify this?',
+                    options: [
+                        'Three separate, unrelated projects',
+                        'A Program—multiple related projects managed together for strategic benefit',
+                        'A Portfolio',
+                        'A single project'
+                    ],
+                    correct: [1],
+                    explanation: 'These related projects coordinated for a common strategic goal define a Program.'
+                },
+                {
+                    id: 50,
+                    type: 'scenario',
+                    question: 'Your organization is deciding between 50 different technology initiatives to pursue. What management approach is needed?',
+                    options: [
+                        'Project Management',
+                        'Program Management',
+                        'Portfolio Management to align initiatives with business strategy and resources',
+                        'No formal management needed'
+                    ],
+                    correct: [2],
+                    explanation: 'Portfolio management prioritizes and aligns multiple initiatives for maximum strategic value.'
+                },
+                {
+                    id: 51,
+                    type: 'scenario',
+                    question: 'An organization wants to use digital technology to enter new markets and change how it operates. This is best described as:',
+                    options: [
+                        'IT implementation',
+                        'Digital Transformation—using technology to fundamentally reshape operations and business model',
+                        'Adding new software',
+                        'Updating hardware'
+                    ],
+                    correct: [1],
+                    explanation: 'Fundamental, strategic change enabled by technology is digital transformation, not just IT implementation.'
+                },
+                {
+                    id: 52,
+                    type: 'scenario',
+                    question: 'A company\'s IT decisions keep conflicting with business strategy. The primary governance issue is:',
+                    options: [
+                        'Poor budgeting',
+                        'Lack of strategic alignment governance and decision-making frameworks',
+                        'Too many IT staff',
+                        'Inadequate hardware'
+                    ],
+                    correct: [1],
+                    explanation: 'IT governance structures ensure alignment between technology decisions and business objectives.'
+                },
+                {
+                    id: 53,
+                    type: 'scenario',
+                    question: 'Users are resisting new business processes implemented after a system upgrade. The organization should apply:',
+                    options: [
+                        'Force the changes immediately',
+                        'Change Management—structured approach to transition people through the change',
+                        'Revert to old processes',
+                        'Blame the users'
+                    ],
+                    correct: [1],
+                    explanation: 'Change management addresses resistance and ensures smooth adoption of new processes.'
+                },
+                {
+                    id: 54,
+                    type: 'scenario',
+                    question: 'An organization wants to understand its current capability level for digital initiatives and plan improvements. Which tool helps?',
+                    options: [
+                        'Project Charter',
+                        'Budget Plan',
+                        'Maturity Model defining capability levels from initial to optimized',
+                        'Organizational chart'
+                    ],
+                    correct: [2],
+                    explanation: 'Maturity models assess current state and provide roadmaps for organizational progression.'
+                },
+                {
+                    id: 55,
+                    type: 'scenario',
+                    question: 'A project has multiple groups with competing interests: senior management, end users, vendors, and competitors. These are all:',
+                    options: [
+                        'Only the project team',
+                        'Stakeholders with different interests in the project',
+                        'External parties not important to the project',
+                        'Only customers'
+                    ],
+                    correct: [1],
+                    explanation: 'Stakeholders include any individual or group affected by or affecting the project.'
+                },
+                {
+                    id: 56,
+                    type: 'scenario',
+                    question: 'A project discovers that scope requirements keep expanding without time/budget adjustments. This is:',
+                    options: [
+                        'Normal project dynamics',
+                        'Scope Creep—uncontrolled expansion requiring change control',
+                        'Improved efficiency',
+                        'Better planning'
+                    ],
+                    correct: [1],
+                    explanation: 'Scope creep is expansion without formal change control and is a major project risk.'
+                },
+                {
+                    id: 57,
+                    type: 'scenario',
+                    question: 'An organization wants to transform outdated mainframe systems to modern cloud platforms gradually. This is:',
+                    options: [
+                        'System replacement',
+                        'Legacy Modernization—strategic, incremental updating of outdated systems',
+                        'Complete system overhaul',
+                        'Hardware upgrade'
+                    ],
+                    correct: [1],
+                    explanation: 'Legacy modernization is a strategic approach maintaining business continuity while updating systems.'
+                },
+                {
+                    id: 58,
+                    type: 'scenario',
+                    question: 'A company\'s organizational structure recently changed from functional to matrix reporting. This affects:',
+                    options: [
+                        'Only the executive level',
+                        'How roles, responsibilities, and authority are arranged and communicated',
+                        'Just the IT department',
+                        'Nothing important'
+                    ],
+                    correct: [1],
+                    explanation: 'Organizational structure directly impacts reporting relationships, decision-making, and communication.'
+                },
+                {
+                    id: 59,
+                    type: 'scenario',
+                    question: 'A project team encounters a potential supply chain disruption risk. The appropriate response is:',
+                    options: [
+                        'Hope it doesn\'t happen',
+                        'Risk Management—identify, analyze, plan responses, and monitor',
+                        'Cancel the project',
+                        'Ignore it'
+                    ],
+                    correct: [1],
+                    explanation: 'Risk management is the proactive process of addressing potential issues.'
+                },
+                {
+                    id: 60,
+                    type: 'scenario',
+                    question: 'Which of these best defines "Strategic Alignment" in IT governance?',
+                    options: [
+                        'All departments using identical systems',
+                        'IT strategy and business strategy integrated and mutually supportive',
+                        'Same budget for all IT initiatives',
+                        'Centralized IT decision-making'
+                    ],
+                    correct: [1],
+                    explanation: 'Strategic alignment ensures IT investments enable and support business objectives.'
+                }
+            ],
+
+            state: {
+                currentScreen: 'intro',
+                currentQuestion: 0,
+                score: 0,
+                totalPoints: 0,
+                answers: [],
+                timeRemaining: 3600,
+                timerInterval: null,
+                questionOrder: []
+            },
+
+            init() {
+                this.state.questionOrder = this.getRandomizedQuestions();
+                this.render();
+                this.startTimer();
+            },
+
+            getRandomizedQuestions() {
+                const indices = Array.from({ length: this.questions.length }, (_, i) => i);
+                for (let i = indices.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [indices[i], indices[j]] = [indices[j], indices[i]];
+                }
+                return indices;
+            },
+
+            startTimer() {
+                if (this.state.timerInterval) clearInterval(this.state.timerInterval);
+                this.state.timerInterval = setInterval(() => {
+                    this.state.timeRemaining--;
+                    if (this.state.timeRemaining <= 0) {
+                        clearInterval(this.state.timerInterval);
+                        this.finishQuiz();
+                    } else {
+                        this.updateTimerDisplay();
+                    }
+                }, 1000);
+            },
+
+            updateTimerDisplay() {
+                const timerElement = document.querySelector('[data-timer]');
+                if (timerElement) {
+                    timerElement.textContent = this.formatTime(this.state.timeRemaining);
+                    timerElement.className = this.state.timeRemaining < 300 ? 'text-red-600 timer-danger' : 'text-gray-600';
+                }
+            },
+
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            },
+
+            startQuiz() {
+                this.state.currentScreen = 'quiz';
+                this.state.currentQuestion = 0;
+                this.state.score = 0;
+                this.state.totalPoints = 0;
+                this.state.answers = new Array(this.questions.length).fill(null);
+                this.state.timeRemaining = 3600;
+                this.state.questionOrder = this.getRandomizedQuestions();
+                clearInterval(this.state.timerInterval);
+                this.startTimer();
+                this.render();
+            },
+
+            selectAnswer(optionIndex) {
+                if (this.state.currentScreen !== 'quiz') return;
+
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+
+                if (question.type === 'mc-multi') {
+                    if (!this.state.answers[qIndex]) {
+                        this.state.answers[qIndex] = [];
+                    }
+                    if (this.state.answers[qIndex].includes(optionIndex)) {
+                        this.state.answers[qIndex] = this.state.answers[qIndex].filter(i => i !== optionIndex);
+                    } else {
+                        this.state.answers[qIndex].push(optionIndex);
+                    }
+                } else {
+                    this.state.answers[qIndex] = optionIndex;
+                }
+                this.render();
+            },
+
+            submitAnswer() {
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+                const answer = this.state.answers[qIndex];
+
+                let isCorrect = false;
+                if (question.type === 'mc-multi') {
+                    isCorrect = answer && Array.isArray(answer) &&
+                               answer.length === question.correct.length &&
+                               answer.every(a => question.correct.includes(a));
+                } else if (question.type === 'tf') {
+                    isCorrect = answer === question.correct[0];
+                } else {
+                    isCorrect = answer === question.correct[0];
+                }
+
+                if (isCorrect) {
+                    this.state.score += 1;
+                }
+                this.state.totalPoints += 1;
+
+                this.state.currentScreen = 'feedback';
+                this.state.answers[qIndex] = answer;
+                this.render();
+            },
+
+            nextQuestion() {
+                if (this.state.currentQuestion < this.questions.length - 1) {
+                    this.state.currentQuestion++;
+                    this.state.currentScreen = 'quiz';
+                    this.render();
+                } else {
+                    this.finishQuiz();
+                }
+            },
+
+            finishQuiz() {
+                clearInterval(this.state.timerInterval);
+                this.state.currentScreen = 'results';
+                this.render();
+            },
+
+            restart() {
+                this.state.currentScreen = 'intro';
+                this.init();
+            },
+
+            render() {
+                const app = document.getElementById('app');
+
+                if (this.state.currentScreen === 'intro') {
+                    app.innerHTML = this.renderIntro();
+                } else if (this.state.currentScreen === 'quiz') {
+                    app.innerHTML = this.renderQuiz();
+                } else if (this.state.currentScreen === 'feedback') {
+                    app.innerHTML = this.renderFeedback();
+                } else if (this.state.currentScreen === 'results') {
+                    app.innerHTML = this.renderResults();
+                }
+            },
+
+            renderIntro() {
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center p-4">
+                        <div class="max-w-2xl w-full bg-white rounded-lg shadow-2xl p-8 md:p-12 fade-in">
+                            <div class="text-center mb-8">
+                                <h1 class="text-4xl font-bold text-teal-600 mb-2">SDT600</h1>
+                                <p class="text-2xl text-gray-700">Terminology & Definitions Quiz</p>
+                                <p class="text-gray-500 mt-2">Foundation Knowledge Assessment</p>
+                            </div>
+
+                            <div class="space-y-6 mb-8">
+                                <div class="bg-teal-50 p-6 rounded-lg">
+                                    <h3 class="font-bold text-lg text-teal-600 mb-3">📚 Quiz Details</h3>
+                                    <ul class="space-y-2 text-gray-700">
+                                        <li><strong>Total Questions:</strong> 60 questions</li>
+                                        <li><strong>Focus:</strong> Key terminologies and definitions</li>
+                                        <li><strong>Question Types:</strong>
+                                            <ul class="ml-6 text-sm mt-1">
+                                                <li>• Multiple Choice (single & multi-select)</li>
+                                                <li>• True/False</li>
+                                                <li>• Definition Scenarios</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Time Limit:</strong> 60 minutes</li>
+                                        <li><strong>Points:</strong> 1 point per question</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-green-50 p-6 rounded-lg">
+                                    <h3 class="font-bold text-lg text-green-600 mb-3">🎯 Topics Covered</h3>
+                                    <ul class="space-y-1 text-gray-700 text-sm">
+                                        <li>✓ Project, Program, Portfolio definitions</li>
+                                        <li>✓ Project/Program/Portfolio Management</li>
+                                        <li>✓ Digital Strategy vs Business Strategy</li>
+                                        <li>✓ IS vs IT - distinctions</li>
+                                        <li>✓ Governance & Strategic Alignment</li>
+                                        <li>✓ Business Processes & BPM</li>
+                                        <li>✓ Earned Value, Scope, Baselines</li>
+                                        <li>✓ Stakeholders, Change Management</li>
+                                        <li>✓ Risk, Maturity Models, Modernization</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-blue-50 p-6 rounded-lg">
+                                    <h3 class="font-bold text-lg text-blue-600 mb-3">✅ Purpose</h3>
+                                    <p class="text-gray-700 text-sm">
+                                        Master foundational terminologies and definitions. This quiz ensures you understand core concepts before applying them in scenarios.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="border-t pt-6">
+                                <button onclick="QuizApp.startQuiz()"
+                                    class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                    Start Terminology Quiz
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderQuiz() {
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+                const progress = ((this.state.currentQuestion + 1) / this.questions.length) * 100;
+                const timeColor = this.state.timeRemaining < 300 ? 'text-red-600 timer-danger' : 'text-gray-600';
+
+                let questionContent = '';
+
+                if (question.type === 'mc-single' || question.type === 'mc-multi') {
+                    const isMulti = question.type === 'mc-multi';
+                    questionContent = `
+                        <div class="space-y-3">
+                            ${question.options.map((option, idx) => `
+                                <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg hover:border-teal-400 hover:bg-teal-50 cursor-pointer transition"
+                                    onclick="event.stopPropagation()">
+                                    <input type="checkbox" ${isMulti ? '' : 'name="answer"'}
+                                        ${this.state.answers[qIndex] && (isMulti ? this.state.answers[qIndex].includes(idx) : this.state.answers[qIndex] === idx) ? 'checked' : ''}
+                                        onchange="QuizApp.selectAnswer(${idx})"
+                                        class="w-5 h-5 text-teal-600 rounded mt-1 flex-shrink-0">
+                                    <span class="ml-4 text-gray-700">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (question.type === 'tf') {
+                    questionContent = `
+                        <div class="space-y-3">
+                            ${question.options.map((option, idx) => `
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-teal-400 hover:bg-teal-50 cursor-pointer transition"
+                                    onclick="event.stopPropagation()">
+                                    <input type="radio" name="answer"
+                                        ${this.state.answers[qIndex] === idx ? 'checked' : ''}
+                                        onchange="QuizApp.selectAnswer(${idx})"
+                                        class="w-5 h-5 text-teal-600">
+                                    <span class="ml-4 text-gray-700 text-lg font-semibold">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (question.type === 'scenario') {
+                    questionContent = `
+                        <div class="space-y-3">
+                            ${question.options.map((option, idx) => `
+                                <label class="flex items-start p-4 border-2 border-gray-200 rounded-lg hover:border-teal-400 hover:bg-teal-50 cursor-pointer transition"
+                                    onclick="event.stopPropagation()">
+                                    <input type="radio" name="answer"
+                                        ${this.state.answers[qIndex] === idx ? 'checked' : ''}
+                                        onchange="QuizApp.selectAnswer(${idx})"
+                                        class="w-5 h-5 text-teal-600 mt-1 flex-shrink-0">
+                                    <span class="ml-4 text-gray-700">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 p-4">
+                        <div class="max-w-3xl mx-auto">
+                            <!-- Header -->
+                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h1 class="text-2xl font-bold text-teal-600">Terminology Quiz</h1>
+                                    <div class="text-right">
+                                        <div class="text-3xl font-bold" data-timer>${this.formatTime(this.state.timeRemaining)}</div>
+                                        <p class="text-sm text-gray-600">Time Remaining</p>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="progress-bar bg-teal-600 h-3 rounded-full" style="width: ${progress}%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Question ${this.state.currentQuestion + 1} of ${this.questions.length}</p>
+                            </div>
+
+                            <!-- Question -->
+                            <div class="bg-white rounded-lg shadow-md p-8">
+                                <p class="text-lg font-semibold text-gray-800 mb-6">${question.question}</p>
+                                ${questionContent}
+
+                                <div class="mt-8 flex gap-4">
+                                    <button onclick="QuizApp.submitAnswer()"
+                                        class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                        Submit Answer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderFeedback() {
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+                const answer = this.state.answers[qIndex];
+
+                let isCorrect = false;
+                if (question.type === 'mc-multi') {
+                    isCorrect = answer && Array.isArray(answer) &&
+                               answer.length === question.correct.length &&
+                               answer.every(a => question.correct.includes(a));
+                } else {
+                    isCorrect = answer === question.correct[0];
+                }
+
+                const answerText = question.type === 'mc-multi'
+                    ? `[${answer ? answer.map(i => question.options[i]).join(', ') : 'Not answered'}]`
+                    : question.options[answer] || 'Not answered';
+
+                const correctText = question.type === 'mc-multi'
+                    ? `[${question.correct.map(i => question.options[i]).join(', ')}]`
+                    : question.options[question.correct[0]];
+
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 p-4">
+                        <div class="max-w-3xl mx-auto">
+                            <!-- Header -->
+                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                                <div class="flex justify-between items-center">
+                                    <h1 class="text-2xl font-bold text-teal-600">Terminology Quiz</h1>
+                                    <div class="text-right">
+                                        <div class="text-3xl font-bold text-gray-600" data-timer>${this.formatTime(this.state.timeRemaining)}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feedback -->
+                            <div class="bg-white rounded-lg shadow-md p-8">
+                                <div class="mb-6 p-4 rounded-lg ${isCorrect ? 'bg-green-100 border-l-4 border-green-500' : 'bg-red-100 border-l-4 border-red-500'}">
+                                    <p class="text-lg font-bold ${isCorrect ? 'text-green-700' : 'text-red-700'}">
+                                        ${isCorrect ? '✓ Correct!' : '✗ Incorrect'}
+                                    </p>
+                                </div>
+
+                                <div class="space-y-6">
+                                    <div>
+                                        <p class="font-semibold text-gray-700">Question:</p>
+                                        <p class="text-gray-600 mt-2">${question.question}</p>
+                                    </div>
+
+                                    <div>
+                                        <p class="font-semibold text-gray-700">Your Answer:</p>
+                                        <p class="text-gray-600 mt-1 ${isCorrect ? 'text-green-700' : 'text-red-700'}">${answerText}</p>
+                                    </div>
+
+                                    ${!isCorrect ? `
+                                        <div>
+                                            <p class="font-semibold text-gray-700">Correct Answer:</p>
+                                            <p class="text-gray-600 mt-1 text-green-700">${correctText}</p>
+                                        </div>
+                                    ` : ''}
+
+                                    <div class="bg-teal-50 p-4 rounded-lg">
+                                        <p class="font-semibold text-gray-700 mb-2">💡 Explanation:</p>
+                                        <p class="text-gray-700">${question.explanation}</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8">
+                                    <button onclick="QuizApp.nextQuestion()"
+                                        class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                        ${this.state.currentQuestion === this.questions.length - 1 ? 'View Results' : 'Next Question'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderResults() {
+                const percentage = Math.round((this.state.score / this.state.totalPoints) * 100);
+                const correctCount = this.state.score;
+                const wrongCount = this.state.totalPoints - this.state.score;
+
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 flex items-center justify-center p-4">
+                        <div class="max-w-2xl w-full bg-white rounded-lg shadow-2xl p-8 md:p-12 fade-in">
+                            <div class="text-center mb-8">
+                                <div class="text-6xl font-bold text-teal-600 mb-4">
+                                    ${percentage >= 75 ? '🌟' : percentage >= 60 ? '✓' : '📚'}
+                                </div>
+                                <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                                    ${percentage >= 75 ? 'Excellent Understanding!' : percentage >= 60 ? 'Good Grasp!' : 'Keep Studying!'}
+                                </h1>
+                            </div>
+
+                            <div class="space-y-6 mb-8">
+                                <div class="bg-teal-50 p-6 rounded-lg text-center">
+                                    <p class="text-gray-600 font-semibold mb-2">Final Score</p>
+                                    <p class="text-5xl font-bold text-teal-600">${percentage}%</p>
+                                    <p class="text-gray-600 text-sm mt-2">${this.state.score} out of ${this.state.totalPoints} points</p>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-green-50 p-6 rounded-lg text-center">
+                                        <p class="text-gray-600 font-semibold mb-2">Correct</p>
+                                        <p class="text-4xl font-bold text-green-600">${correctCount}</p>
+                                    </div>
+                                    <div class="bg-red-50 p-6 rounded-lg text-center">
+                                        <p class="text-gray-600 font-semibold mb-2">Incorrect</p>
+                                        <p class="text-4xl font-bold text-red-600">${wrongCount}</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-indigo-50 p-6 rounded-lg">
+                                    <p class="font-semibold text-indigo-800 mb-2">📖 Key Takeaway</p>
+                                    <p class="text-gray-700 text-sm">
+                                        ${percentage >= 75 ? 'Strong terminology foundation! You\'re well-prepared for application questions.' : percentage >= 60 ? 'Review the areas you struggled with before moving to application scenarios.' : 'Focus on foundational definitions. Review all terminology before proceeding.'}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button onclick="QuizApp.restart()"
+                                class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                Retake Quiz
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+
+        // Initialize app
+        QuizApp.init();
+    </script>
+</body>
+</html>
