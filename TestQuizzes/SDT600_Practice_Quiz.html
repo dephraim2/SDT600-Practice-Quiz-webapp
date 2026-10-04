@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDT600 Digital Transformation Management - Practice Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        .timer-danger {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div id="app"></div>
+
+    <script>
+        // Quiz Application
+        const QuizApp = {
+            questions: [
+                // Multiple Choice Questions (28 total - 23 single-select + 5 multi-select)
+                {
+                    id: 1,
+                    type: 'mc-single',
+                    question: 'According to Peppard & Ward, what are the three main components of the Digital Strategy Framework?',
+                    options: [
+                        'Inputs, Outputs, and Planned Activities',
+                        'Analysis, Design, and Implementation',
+                        'Planning, Execution, and Control',
+                        'Strategic, Tactical, and Operational'
+                    ],
+                    correct: [0],
+                    explanation: 'Peppard & Ward framework consists of Inputs (business and IT environments), Outputs (strategic plans), and Planned Activities (process execution).'
+                },
+                {
+                    id: 2,
+                    type: 'mc-single',
+                    question: 'What is the primary purpose of Earned Value Management (EVM) in project management?',
+                    options: [
+                        'To estimate project cost overruns',
+                        'To integrate scope, schedule, and cost to measure project performance',
+                        'To reduce project timeline',
+                        'To improve team morale'
+                    ],
+                    correct: [1],
+                    explanation: 'EVM integrates project scope, schedule, and cost baseline to assess and track project performance objectively.'
+                },
+                {
+                    id: 3,
+                    type: 'mc-single',
+                    question: 'According to Tuckman\'s model, which stage is characterized by increased productivity and cooperation?',
+                    options: [
+                        'Forming',
+                        'Storming',
+                        'Performing',
+                        'Adjourning'
+                    ],
+                    correct: [2],
+                    explanation: 'The Performing stage is where the team functions effectively with clear roles, established processes, and high productivity.'
+                },
+                {
+                    id: 4,
+                    type: 'mc-single',
+                    question: 'In Porter\'s Value Chain, which activities are considered "support activities"?',
+                    options: [
+                        'Inbound logistics, operations, outbound logistics',
+                        'Marketing, sales, service',
+                        'Procurement, technology development, human resources, firm infrastructure',
+                        'Quality assurance, testing, delivery'
+                    ],
+                    correct: [2],
+                    explanation: 'Support activities include procurement, technology development, HRM, and firm infrastructure that support primary activities.'
+                },
+                {
+                    id: 5,
+                    type: 'mc-single',
+                    question: 'What does the Cost Performance Index (CPI) measure in EVM?',
+                    options: [
+                        'The ratio of work scheduled to work performed',
+                        'The ratio of earned value to actual cost',
+                        'The amount of cost overrun in absolute terms',
+                        'The efficiency of resource utilization over time'
+                    ],
+                    correct: [1],
+                    explanation: 'CPI = EV/AC measures cost efficiency. CPI > 1 means under budget, CPI < 1 means over budget.'
+                },
+                {
+                    id: 6,
+                    type: 'mc-single',
+                    question: 'Which Agile principle emphasizes delivering business value early and continuously?',
+                    options: [
+                        'Individuals and interactions over processes and tools',
+                        'Working software over comprehensive documentation',
+                        'Customer collaboration over contract negotiation',
+                        'Early and continuous delivery of valuable software'
+                    ],
+                    correct: [3],
+                    explanation: 'The fourth Agile value emphasizes early and continuous delivery of valuable software to satisfy the customer.'
+                },
+                {
+                    id: 7,
+                    type: 'mc-single',
+                    question: 'What is the primary role of the Product Owner in Scrum?',
+                    options: [
+                        'Manage team resources and assign tasks',
+                        'Maximize product value and manage the product backlog',
+                        'Facilitate daily standup meetings',
+                        'Ensure compliance with organizational policies'
+                    ],
+                    correct: [1],
+                    explanation: 'The Product Owner is responsible for maximizing product value and managing the product backlog priorities.'
+                },
+                {
+                    id: 8,
+                    type: 'mc-single',
+                    question: 'In Scrum, what is the time-box duration for a Daily Standup?',
+                    options: [
+                        '5 minutes',
+                        '15 minutes',
+                        '30 minutes',
+                        '1 hour'
+                    ],
+                    correct: [1],
+                    explanation: 'The Daily Standup (Daily Scrum) is a 15-minute time-boxed event held at the same time each day.'
+                },
+                {
+                    id: 9,
+                    type: 'mc-single',
+                    question: 'Which of the following best describes digital transformation?',
+                    options: [
+                        'Simply replacing manual processes with digital tools',
+                        'Using technology to fundamentally change business operations, culture, and value delivery',
+                        'Implementing enterprise resource planning systems',
+                        'Creating a company website and social media presence'
+                    ],
+                    correct: [1],
+                    explanation: 'Digital transformation is a comprehensive change in how organizations operate and deliver value through digital technologies.'
+                },
+                {
+                    id: 10,
+                    type: 'mc-single',
+                    question: 'What does the Schedule Performance Index (SPI) indicate when its value is less than 1.0?',
+                    options: [
+                        'Project is ahead of schedule',
+                        'Project is behind schedule',
+                        'Project is on schedule',
+                        'Schedule variance cannot be determined'
+                    ],
+                    correct: [1],
+                    explanation: 'SPI < 1.0 means EV < PV, indicating the project is behind schedule (less work performed than planned).'
+                },
+                {
+                    id: 11,
+                    type: 'mc-single',
+                    question: 'Which strategic framework helps organizations understand their competitive position?',
+                    options: [
+                        'SWOT Analysis',
+                        'Balanced Scorecard',
+                        'Porter\'s Five Forces',
+                        'All of the above'
+                    ],
+                    correct: [2],
+                    explanation: 'Porter\'s Five Forces analyzes competitive forces: rivalry, supplier power, buyer power, threat of substitutes, and threat of new entrants.'
+                },
+                {
+                    id: 12,
+                    type: 'mc-single',
+                    question: 'What is the main objective of governance in digital transformation?',
+                    options: [
+                        'To reduce IT spending',
+                        'To ensure strategic alignment, accountability, and effective management of digital initiatives',
+                        'To eliminate middle management',
+                        'To centralize all decision-making'
+                    ],
+                    correct: [1],
+                    explanation: 'Governance ensures strategic alignment, accountability, risk management, and value realization of digital initiatives.'
+                },
+                {
+                    id: 13,
+                    type: 'mc-single',
+                    question: 'Which of the following is NOT a component of Peppard & Ward\'s Digital Strategy Framework inputs?',
+                    options: [
+                        'Internal business environment',
+                        'External IT environment',
+                        'Stakeholder preferences',
+                        'Internal IS/IT environment'
+                    ],
+                    correct: [2],
+                    explanation: 'The framework\'s inputs are: internal business environment, external business environment, internal IS/IT environment, and external IS/IT environment.'
+                },
+                {
+                    id: 14,
+                    type: 'mc-single',
+                    question: 'In project management, what does scope creep refer to?',
+                    options: [
+                        'Gradual expansion of project scope without corresponding time/budget adjustments',
+                        'Reduction in project features',
+                        'Improved project efficiency',
+                        'Better stakeholder communication'
+                    ],
+                    correct: [0],
+                    explanation: 'Scope creep is uncontrolled expansion of project scope, leading to resource overruns and schedule delays.'
+                },
+                {
+                    id: 15,
+                    type: 'mc-single',
+                    question: 'What is the significance of the Estimate at Completion (EAC) metric?',
+                    options: [
+                        'Measures current project cost',
+                        'Projects total cost upon project completion',
+                        'Calculates cumulative spending',
+                        'Determines team performance rating'
+                    ],
+                    correct: [1],
+                    explanation: 'EAC forecasts the expected total cost at project completion based on current performance trends.'
+                },
+                {
+                    id: 16,
+                    type: 'mc-single',
+                    question: 'According to the Agile Manifesto, which should be prioritized?',
+                    options: [
+                        'Comprehensive documentation',
+                        'Contract negotiation',
+                        'Working software over comprehensive documentation',
+                        'Following a detailed plan'
+                    ],
+                    correct: [2],
+                    explanation: 'The Agile Manifesto values working software over comprehensive documentation as a measure of progress.'
+                },
+                {
+                    id: 17,
+                    type: 'mc-single',
+                    question: 'What is the primary benefit of implementing IT governance?',
+                    options: [
+                        'Reduced IT staff headcount',
+                        'Alignment of IT initiatives with business strategy and risk mitigation',
+                        'Elimination of technical debt',
+                        'Faster software development'
+                    ],
+                    correct: [1],
+                    explanation: 'IT governance ensures alignment with business objectives, improves decision-making, and manages risks effectively.'
+                },
+                {
+                    id: 18,
+                    type: 'mc-single',
+                    question: 'In Scrum, what does the sprint retrospective focus on?',
+                    options: [
+                        'Planning the next sprint',
+                        'Reviewing product features',
+                        'Team reflection on process improvements',
+                        'Client acceptance testing'
+                    ],
+                    correct: [2],
+                    explanation: 'Sprint retrospective is where the team reflects on what went well, what didn\'t, and what improvements to make.'
+                },
+                {
+                    id: 19,
+                    type: 'mc-single',
+                    question: 'What does digital maturity assessment measure?',
+                    options: [
+                        'The age of IT infrastructure',
+                        'An organization\'s capability level in implementing and managing digital initiatives',
+                        'Number of digital projects completed',
+                        'IT department budget size'
+                    ],
+                    correct: [1],
+                    explanation: 'Digital maturity assessment evaluates organizational capability across processes, people, technology, and governance.'
+                },
+                {
+                    id: 20,
+                    type: 'mc-single',
+                    question: 'Which of the following is a key principle of stakeholder management?',
+                    options: [
+                        'Avoid stakeholder communication',
+                        'Identify, analyze, and engage stakeholders actively',
+                        'Make decisions without stakeholder input',
+                        'Ignore stakeholder concerns'
+                    ],
+                    correct: [1],
+                    explanation: 'Effective stakeholder management involves identifying stakeholders, analyzing their interests, and maintaining active engagement.'
+                },
+                {
+                    id: 21,
+                    type: 'mc-single',
+                    question: 'What is the primary difference between strategy and tactics?',
+                    options: [
+                        'Strategy is short-term; tactics are long-term',
+                        'Strategy is long-term direction; tactics are short-term actions',
+                        'Tactics require more resources than strategy',
+                        'Strategy focuses on technology; tactics focus on people'
+                    ],
+                    correct: [1],
+                    explanation: 'Strategy provides long-term direction and goals; tactics are specific short-term actions to achieve those goals.'
+                },
+                {
+                    id: 22,
+                    type: 'mc-single',
+                    question: 'In value chain analysis, which activity typically adds the most value?',
+                    options: [
+                        'Procurement',
+                        'Primary activities directly related to delivering the product/service',
+                        'Human resources management',
+                        'Technology development'
+                    ],
+                    correct: [1],
+                    explanation: 'Primary activities (inbound logistics, operations, outbound logistics, marketing, sales, service) directly create customer value.'
+                },
+                {
+                    id: 23,
+                    type: 'mc-single',
+                    question: 'What is the To-Complete Performance Index (TCPI) used for?',
+                    options: [
+                        'Measuring past project performance',
+                        'Determining the required efficiency to stay within budget',
+                        'Calculating team productivity',
+                        'Assessing resource availability'
+                    ],
+                    correct: [1],
+                    explanation: 'TCPI shows the cost performance efficiency needed on remaining work to meet budget targets or forecasts.'
+                },
+                // Multi-select questions (5 total)
+                {
+                    id: 24,
+                    type: 'mc-multi',
+                    question: 'Which of the following are considered outputs of Peppard & Ward\'s Digital Strategy Framework? (Select ALL that apply)',
+                    options: [
+                        'Business IS strategy',
+                        'External market analysis',
+                        'IS/IT management strategy',
+                        'IT strategy',
+                        'Resource inventory'
+                    ],
+                    correct: [0, 2, 3],
+                    explanation: 'The outputs are: Business IS strategy, IS/IT management strategy, and IT strategy. These define how digital technology will be managed.'
+                },
+                {
+                    id: 25,
+                    type: 'mc-multi',
+                    question: 'Which of the following are valid EVM formulas? (Select ALL that apply)',
+                    options: [
+                        'SV = EV - PV',
+                        'CV = EV - AC',
+                        'SPI = PV / EV',
+                        'CPI = EV / AC',
+                        'EAC = AC / CPI'
+                    ],
+                    correct: [0, 1, 3, 4],
+                    explanation: 'Valid formulas: SV = EV - PV, CV = EV - AC, CPI = EV/AC, EAC = AC/CPI. Note: SPI = EV/PV (not PV/EV).'
+                },
+                {
+                    id: 26,
+                    type: 'mc-multi',
+                    question: 'Which of the following are characteristics of the Performing stage in Tuckman\'s model? (Select ALL that apply)',
+                    options: [
+                        'High productivity and efficiency',
+                        'Established team norms and processes',
+                        'Frequent conflicts and disagreements',
+                        'Clear role definitions and responsibilities',
+                        'Minimal supervision needed'
+                    ],
+                    correct: [0, 1, 3, 4],
+                    explanation: 'Performing stage shows: high productivity, established norms, clear roles, and autonomy. Conflicts are characteristic of Storming stage.'
+                },
+                {
+                    id: 27,
+                    type: 'mc-multi',
+                    question: 'Which elements are critical for successful digital transformation? (Select ALL that apply)',
+                    options: [
+                        'Strong leadership commitment',
+                        'Clear technology strategy only',
+                        'Cultural change and organizational alignment',
+                        'Continuous learning and adaptation',
+                        'Siloed departmental approaches'
+                    ],
+                    correct: [0, 2, 3],
+                    explanation: 'Success requires: leadership commitment, cultural alignment, learning culture. Technology-only approaches and silos fail.'
+                },
+                {
+                    id: 28,
+                    type: 'mc-multi',
+                    question: 'Which of the following are governance mechanisms in IT management? (Select ALL that apply)',
+                    options: [
+                        'Policies and procedures',
+                        'Committee structures and decision-making bodies',
+                        'Informal communications only',
+                        'Performance metrics and monitoring',
+                        'Risk management frameworks'
+                    ],
+                    correct: [0, 1, 3, 4],
+                    explanation: 'Governance includes formal policies, committee structures, metrics/monitoring, and risk frameworks. Informal only is insufficient.'
+                },
+
+                // True/False Questions (10 total)
+                {
+                    id: 29,
+                    type: 'tf',
+                    question: 'Earned Value (EV) represents the budgeted cost of work actually performed.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. EV is the budgeted value of completed work, a key metric for assessing actual progress against plan.'
+                },
+                {
+                    id: 30,
+                    type: 'tf',
+                    question: 'In Agile methodology, the product backlog is managed by the Scrum Master.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. The Product Owner manages the product backlog. The Scrum Master facilitates the process and removes impediments.'
+                },
+                {
+                    id: 31,
+                    type: 'tf',
+                    question: 'Scope creep is always beneficial to project outcomes.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Uncontrolled scope expansion typically causes schedule delays, budget overruns, and reduced quality.'
+                },
+                {
+                    id: 32,
+                    type: 'tf',
+                    question: 'The Forming stage in Tuckman\'s model is characterized by high productivity.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Forming is when teams are developing and establishing themselves. Performing is the high productivity stage.'
+                },
+                {
+                    id: 33,
+                    type: 'tf',
+                    question: 'IT governance ensures alignment between technology investments and business strategy.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. Governance aligns IT with business objectives, manages risks, and optimizes value realization.'
+                },
+                {
+                    id: 34,
+                    type: 'tf',
+                    question: 'In Porter\'s Value Chain, support activities are directly involved in producing the final product.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Primary activities directly produce value; support activities enable primary activities (procurement, HR, etc.).'
+                },
+                {
+                    id: 35,
+                    type: 'tf',
+                    question: 'A Cost Performance Index (CPI) of 0.85 indicates the project is under budget.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. CPI = 0.85 means spending $1.17 for each $1 of value created—the project is over budget.'
+                },
+                {
+                    id: 36,
+                    type: 'tf',
+                    question: 'Digital transformation is primarily about implementing new technology tools.',
+                    correct: [1],
+                    options: ['True', 'False'],
+                    explanation: 'False. Digital transformation involves technology, process redesign, culture change, and organizational alignment.'
+                },
+                {
+                    id: 37,
+                    type: 'tf',
+                    question: 'The sprint backlog is created during sprint planning and owned by the entire Scrum team.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. During sprint planning, the team creates the sprint backlog containing work for the upcoming sprint.'
+                },
+                {
+                    id: 38,
+                    type: 'tf',
+                    question: 'Estimate at Completion (EAC) predicts the total project cost based on current performance trends.',
+                    correct: [0],
+                    options: ['True', 'False'],
+                    explanation: 'Correct. EAC uses current CPI and other factors to forecast the expected total cost at project completion.'
+                },
+
+                // Scenario-based Questions (12 total)
+                {
+                    id: 39,
+                    type: 'scenario',
+                    question: 'Your organization is implementing a digital transformation initiative. The project has: EV = $50,000, PV = $60,000, AC = $55,000. Based on these metrics, what can you conclude?',
+                    options: [
+                        'The project is ahead of schedule and under budget',
+                        'The project is behind schedule and over budget',
+                        'The project is ahead of schedule but over budget',
+                        'The project is behind schedule but under budget'
+                    ],
+                    correct: [1],
+                    explanation: 'SV = EV - PV = -$10,000 (behind schedule); CV = EV - AC = -$5,000 (over budget). Project needs corrective action.'
+                },
+                {
+                    id: 40,
+                    type: 'scenario',
+                    question: 'A newly formed Agile development team is experiencing frequent conflicts during stand-ups and planning meetings. Team members are unclear about roles. Which Tuckman stage are they in, and what should leadership do?',
+                    options: [
+                        'Forming stage; assign clear roles immediately',
+                        'Storming stage; provide coaching and clarify expectations',
+                        'Norming stage; reduce oversight',
+                        'Performing stage; maintain current approach'
+                    ],
+                    correct: [1],
+                    explanation: 'The symptoms indicate Storming stage. Leadership should facilitate conflict resolution, clarify roles/expectations, and provide support.'
+                },
+                {
+                    id: 41,
+                    type: 'scenario',
+                    question: 'An organization\'s digital transformation is failing because IT decisions are misaligned with business strategy, and accountability is unclear. Which governance area needs improvement?',
+                    options: [
+                        'Technical infrastructure only',
+                        'Strategic alignment and decision rights governance',
+                        'Hardware procurement',
+                        'Employee training'
+                    ],
+                    correct: [1],
+                    explanation: 'Clear governance for strategic alignment, decision rights, and accountability is essential for transformation success.'
+                },
+                {
+                    id: 42,
+                    type: 'scenario',
+                    question: 'In Peppard & Ward\'s framework, an organization is defining its business IS strategy. Which of these should it primarily consider?',
+                    options: [
+                        'Only current IT capabilities',
+                        'Competitive environment and internal business capabilities',
+                        'Technology trends alone',
+                        'Historical spending patterns'
+                    ],
+                    correct: [1],
+                    explanation: 'Strategy formulation requires analyzing inputs: internal/external business environment, internal/external IT environment.'
+                },
+                {
+                    id: 43,
+                    type: 'scenario',
+                    question: 'A project manager notices that while EV = $80,000 and PV = $75,000, the AC is $90,000. What recommendation would you make?',
+                    options: [
+                        'Project is performing excellently',
+                        'Investigate cost overruns immediately; project is inefficient',
+                        'Schedule is ahead; minor cost concerns',
+                        'All metrics are favorable'
+                    ],
+                    correct: [1],
+                    explanation: 'SV = $5,000 (ahead), but CV = -$10,000 (over budget). Cost efficiency is poor; investigate AC drivers.'
+                },
+                {
+                    id: 44,
+                    type: 'scenario',
+                    question: 'Using Porter\'s Value Chain, a retailer wants to compete on cost. Which primary activity should they focus on optimizing?',
+                    options: [
+                        'Marketing and sales only',
+                        'Inbound logistics and operations for efficiency',
+                        'Customer service only',
+                        'Technology development'
+                    ],
+                    correct: [1],
+                    explanation: 'Cost competition requires efficiency in operations and supply chain (inbound/outbound logistics, operations).'
+                },
+                {
+                    id: 45,
+                    type: 'scenario',
+                    question: 'A Scrum team completed a sprint with 8 of 10 planned story points. In the retrospective, they discuss process improvements. What should NOT be the focus?',
+                    options: [
+                        'Why 2 story points didn\'t complete',
+                        'Process improvements for next sprint',
+                        'Individual developer performance ratings',
+                        'Impediments that slowed progress'
+                    ],
+                    correct: [2],
+                    explanation: 'Retrospectives focus on process improvements, not individual performance ratings. They\'re team learning sessions.'
+                },
+                {
+                    id: 46,
+                    type: 'scenario',
+                    question: 'An organization uses CPI = 1.15 and needs to complete $100,000 of remaining work. What does this indicate?',
+                    options: [
+                        'Project will need $115,000 more to complete',
+                        'Project will need approximately $86,957 more (100,000/1.15)',
+                        'Project is behind schedule',
+                        'No additional analysis is needed'
+                    ],
+                    correct: [1],
+                    explanation: 'With CPI = 1.15, cost efficiency is good (under budget). For $100k remaining work: $100k / 1.15 ≈ $86,957 needed.'
+                },
+                {
+                    id: 47,
+                    type: 'scenario',
+                    question: 'During digital transformation, an organization encounters resistance from middle management. What is the most effective response?',
+                    options: [
+                        'Impose changes without consultation',
+                        'Involve stakeholders, communicate vision, and address concerns',
+                        'Focus only on technology implementation',
+                        'Delay transformation until resistance disappears'
+                    ],
+                    correct: [1],
+                    explanation: 'Successful transformation requires stakeholder engagement, clear communication, and addressing concerns—not top-down imposition.'
+                },
+                {
+                    id: 48,
+                    type: 'scenario',
+                    question: 'A project is at 60% completion with AC = $60,000, EV = $75,000, and PV = $80,000. Calculate EAC assuming past performance continues:',
+                    options: [
+                        '$80,000',
+                        '$100,000',
+                        'Approximately $80,000 (60,000 / (75,000/80,000))',
+                        'Cannot be determined'
+                    ],
+                    correct: [2],
+                    explanation: 'EAC = AC / (EV/PV) = 60,000 / 0.9375 ≈ $64,000 for work done plus remaining budget (simplified calculation).'
+                },
+                {
+                    id: 49,
+                    type: 'scenario',
+                    question: 'In Agile planning, the Product Owner must balance multiple requests. Which principle should guide prioritization?',
+                    options: [
+                        'First-in, first-out (FIFO)',
+                        'Maximize business value and ROI',
+                        'Easiest items first',
+                        'Customer requests only'
+                    ],
+                    correct: [1],
+                    explanation: 'Product Owner prioritizes based on business value, customer needs, and strategic objectives—not ease or order received.'
+                },
+                {
+                    id: 50,
+                    type: 'scenario',
+                    question: 'An organization assesses its digital maturity as "Level 2 - Repeatable." What should be their next priority?',
+                    options: [
+                        'Maintain current level indefinitely',
+                        'Move toward Level 3 (Defined) by standardizing and documenting processes',
+                        'Skip to Level 5',
+                        'Return to Level 1'
+                    ],
+                    correct: [1],
+                    explanation: 'Maturity progression requires moving from repeatable to defined processes, then managed, and eventually optimized.'
+                }
+            ],
+
+            state: {
+                currentScreen: 'intro',
+                currentQuestion: 0,
+                score: 0,
+                totalPoints: 0,
+                answers: [],
+                timeRemaining: 3600,
+                timerInterval: null,
+                questionOrder: []
+            },
+
+            init() {
+                this.state.questionOrder = this.getRandomizedQuestions();
+                this.render();
+                this.startTimer();
+            },
+
+            getRandomizedQuestions() {
+                const indices = Array.from({ length: this.questions.length }, (_, i) => i);
+                for (let i = indices.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [indices[i], indices[j]] = [indices[j], indices[i]];
+                }
+                return indices;
+            },
+
+            startTimer() {
+                if (this.state.timerInterval) clearInterval(this.state.timerInterval);
+                this.state.timerInterval = setInterval(() => {
+                    this.state.timeRemaining--;
+                    if (this.state.timeRemaining <= 0) {
+                        clearInterval(this.state.timerInterval);
+                        this.finishQuiz();
+                    } else {
+                        this.updateTimerDisplay();
+                    }
+                }, 1000);
+            },
+
+            updateTimerDisplay() {
+                const timerElement = document.querySelector('[data-timer]');
+                const dangerElement = document.querySelector('[data-timer-danger]');
+                if (timerElement) {
+                    timerElement.textContent = this.formatTime(this.state.timeRemaining);
+                    timerElement.className = this.state.timeRemaining < 300 ? 'text-red-600 timer-danger' : 'text-gray-600';
+                }
+                if (dangerElement && this.state.timeRemaining < 300) {
+                    dangerElement.classList.add('timer-danger');
+                }
+            },
+
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            },
+
+            startQuiz() {
+                this.state.currentScreen = 'quiz';
+                this.state.currentQuestion = 0;
+                this.state.score = 0;
+                this.state.totalPoints = 0;
+                this.state.answers = new Array(this.questions.length).fill(null);
+                this.state.timeRemaining = 3600;
+                this.state.questionOrder = this.getRandomizedQuestions();
+                clearInterval(this.state.timerInterval);
+                this.startTimer();
+                this.render();
+            },
+
+            selectAnswer(optionIndex) {
+                if (this.state.currentScreen !== 'quiz') return;
+
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+
+                if (question.type === 'mc-multi') {
+                    if (!this.state.answers[qIndex]) {
+                        this.state.answers[qIndex] = [];
+                    }
+                    if (this.state.answers[qIndex].includes(optionIndex)) {
+                        this.state.answers[qIndex] = this.state.answers[qIndex].filter(i => i !== optionIndex);
+                    } else {
+                        this.state.answers[qIndex].push(optionIndex);
+                    }
+                } else {
+                    this.state.answers[qIndex] = optionIndex;
+                }
+                this.render();
+            },
+
+            submitAnswer() {
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+                const answer = this.state.answers[qIndex];
+
+                let isCorrect = false;
+                if (question.type === 'mc-multi') {
+                    isCorrect = answer && Array.isArray(answer) &&
+                               answer.length === question.correct.length &&
+                               answer.every(a => question.correct.includes(a));
+                } else if (question.type === 'tf') {
+                    isCorrect = answer === question.correct[0];
+                } else {
+                    isCorrect = answer === question.correct[0];
+                }
+
+                if (isCorrect) {
+                    this.state.score += 2;
+                }
+                this.state.totalPoints += 2;
+
+                this.state.currentScreen = 'feedback';
+                this.state.answers[qIndex] = answer;
+                this.render();
+            },
+
+            nextQuestion() {
+                if (this.state.currentQuestion < this.questions.length - 1) {
+                    this.state.currentQuestion++;
+                    this.state.currentScreen = 'quiz';
+                    this.render();
+                } else {
+                    this.finishQuiz();
+                }
+            },
+
+            finishQuiz() {
+                clearInterval(this.state.timerInterval);
+                this.state.currentScreen = 'results';
+                this.render();
+            },
+
+            restart() {
+                this.state.currentScreen = 'intro';
+                this.init();
+            },
+
+            render() {
+                const app = document.getElementById('app');
+
+                if (this.state.currentScreen === 'intro') {
+                    app.innerHTML = this.renderIntro();
+                } else if (this.state.currentScreen === 'quiz') {
+                    app.innerHTML = this.renderQuiz();
+                } else if (this.state.currentScreen === 'feedback') {
+                    app.innerHTML = this.renderFeedback();
+                } else if (this.state.currentScreen === 'results') {
+                    app.innerHTML = this.renderResults();
+                }
+            },
+
+            renderIntro() {
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+                        <div class="max-w-2xl w-full bg-white rounded-lg shadow-2xl p-8 md:p-12 fade-in">
+                            <div class="text-center mb-8">
+                                <h1 class="text-4xl font-bold text-indigo-600 mb-2">SDT600</h1>
+                                <p class="text-2xl text-gray-700">Digital Transformation Management</p>
+                                <p class="text-gray-500 mt-2">Practice Examination</p>
+                            </div>
+
+                            <div class="space-y-6 mb-8">
+                                <div class="bg-blue-50 p-6 rounded-lg">
+                                    <h3 class="font-bold text-lg text-indigo-600 mb-3">📋 Quiz Details</h3>
+                                    <ul class="space-y-2 text-gray-700">
+                                        <li><strong>Total Questions:</strong> 50 questions</li>
+                                        <li><strong>Question Types:</strong>
+                                            <ul class="ml-6 text-sm mt-1">
+                                                <li>• Multiple Choice (single & multi-select)</li>
+                                                <li>• True/False</li>
+                                                <li>• Scenario-based</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Time Limit:</strong> 60 minutes (1 hour)</li>
+                                        <li><strong>Points per Question:</strong> 2 points</li>
+                                        <li><strong>Passing Score:</strong> 50% or higher</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-green-50 p-6 rounded-lg">
+                                    <h3 class="font-bold text-lg text-green-600 mb-3">✅ Format & Rules</h3>
+                                    <ul class="space-y-2 text-gray-700 text-sm">
+                                        <li>✓ One question displayed at a time</li>
+                                        <li>✓ Select your answer(s) and click "Submit Answer"</li>
+                                        <li>✓ Receive immediate feedback with correct answers</li>
+                                        <li>✓ All questions appear in random order each time</li>
+                                        <li>✓ Timer counts down continuously</li>
+                                        <li>✓ Quiz auto-submits when time expires</li>
+                                        <li>✓ Multi-select requires ALL correct answers selected</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-amber-50 p-6 rounded-lg">
+                                    <h3 class="font-bold text-lg text-amber-600 mb-3">📚 Content Coverage</h3>
+                                    <p class="text-gray-700 text-sm">
+                                        Questions cover: Project Management (Larson & Clifford), Strategic Management of IS (Peppard & Ward),
+                                        Digital Transformation Leadership (Iveroth et al.), and Agile methodologies.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="border-t pt-6">
+                                <button onclick="QuizApp.startQuiz()"
+                                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                    Start Practice Examination
+                                </button>
+                            </div>
+
+                            <div class="text-center mt-6 text-gray-600 text-sm">
+                                <p>Powered by: <strong>Ephraim I. Doherty</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderQuiz() {
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+                const progress = ((this.state.currentQuestion + 1) / this.questions.length) * 100;
+                const timeColor = this.state.timeRemaining < 300 ? 'text-red-600 timer-danger' : 'text-gray-600';
+
+                let questionContent = '';
+
+                if (question.type === 'mc-single' || question.type === 'mc-multi') {
+                    const isMulti = question.type === 'mc-multi';
+                    questionContent = `
+                        <div class="space-y-3">
+                            ${question.options.map((option, idx) => `
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer transition"
+                                    onclick="event.stopPropagation()">
+                                    <input type="checkbox" ${isMulti ? '' : 'name="answer"'}
+                                        ${this.state.answers[qIndex] && (isMulti ? this.state.answers[qIndex].includes(idx) : this.state.answers[qIndex] === idx) ? 'checked' : ''}
+                                        onchange="QuizApp.selectAnswer(${idx})"
+                                        class="w-5 h-5 text-indigo-600 rounded">
+                                    <span class="ml-4 text-gray-700">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (question.type === 'tf') {
+                    questionContent = `
+                        <div class="space-y-3">
+                            ${question.options.map((option, idx) => `
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer transition"
+                                    onclick="event.stopPropagation()">
+                                    <input type="radio" name="answer"
+                                        ${this.state.answers[qIndex] === idx ? 'checked' : ''}
+                                        onchange="QuizApp.selectAnswer(${idx})"
+                                        class="w-5 h-5 text-indigo-600">
+                                    <span class="ml-4 text-gray-700 text-lg font-semibold">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                } else if (question.type === 'scenario') {
+                    questionContent = `
+                        <div class="space-y-3">
+                            ${question.options.map((option, idx) => `
+                                <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer transition"
+                                    onclick="event.stopPropagation()">
+                                    <input type="radio" name="answer"
+                                        ${this.state.answers[qIndex] === idx ? 'checked' : ''}
+                                        onchange="QuizApp.selectAnswer(${idx})"
+                                        class="w-5 h-5 text-indigo-600">
+                                    <span class="ml-4 text-gray-700">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+                        <div class="max-w-3xl mx-auto">
+                            <!-- Header -->
+                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h1 class="text-2xl font-bold text-indigo-600">SDT600 Practice Quiz</h1>
+                                    <div class="text-right">
+                                        <div class="text-3xl font-bold" data-timer data-timer-danger>${this.formatTime(this.state.timeRemaining)}</div>
+                                        <p class="text-sm text-gray-600">Time Remaining</p>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="progress-bar bg-indigo-600 h-3 rounded-full" style="width: ${progress}%"></div>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Question ${this.state.currentQuestion + 1} of ${this.questions.length}</p>
+                            </div>
+
+                            <!-- Question -->
+                            <div class="bg-white rounded-lg shadow-md p-8">
+                                <p class="text-lg font-semibold text-gray-800 mb-6">${question.question}</p>
+                                ${questionContent}
+
+                                <div class="mt-8 flex gap-4">
+                                    <button onclick="QuizApp.submitAnswer()"
+                                        class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                        Submit Answer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderFeedback() {
+                const qIndex = this.state.questionOrder[this.state.currentQuestion];
+                const question = this.questions[qIndex];
+                const answer = this.state.answers[qIndex];
+
+                let isCorrect = false;
+                if (question.type === 'mc-multi') {
+                    isCorrect = answer && Array.isArray(answer) &&
+                               answer.length === question.correct.length &&
+                               answer.every(a => question.correct.includes(a));
+                } else if (question.type === 'tf' || question.type === 'scenario' || question.type === 'mc-single') {
+                    isCorrect = answer === question.correct[0];
+                }
+
+                const answerText = question.type === 'mc-multi'
+                    ? `[${answer ? answer.map(i => question.options[i]).join(', ') : 'Not answered'}]`
+                    : question.options[answer] || 'Not answered';
+
+                const correctText = question.type === 'mc-multi'
+                    ? `[${question.correct.map(i => question.options[i]).join(', ')}]`
+                    : question.options[question.correct[0]];
+
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+                        <div class="max-w-3xl mx-auto">
+                            <!-- Header -->
+                            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h1 class="text-2xl font-bold text-indigo-600">SDT600 Practice Quiz</h1>
+                                    <div class="text-right">
+                                        <div class="text-3xl font-bold text-gray-600">${this.formatTime(this.state.timeRemaining)}</div>
+                                        <p class="text-sm text-gray-600">Time Remaining</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feedback -->
+                            <div class="bg-white rounded-lg shadow-md p-8">
+                                <div class="mb-6 p-4 rounded-lg ${isCorrect ? 'bg-green-100 border-l-4 border-green-500' : 'bg-red-100 border-l-4 border-red-500'}">
+                                    <p class="text-lg font-bold ${isCorrect ? 'text-green-700' : 'text-red-700'}">
+                                        ${isCorrect ? '✓ Correct!' : '✗ Incorrect'}
+                                    </p>
+                                </div>
+
+                                <div class="space-y-6">
+                                    <div>
+                                        <p class="font-semibold text-gray-700">Question:</p>
+                                        <p class="text-gray-600 mt-2">${question.question}</p>
+                                    </div>
+
+                                    <div>
+                                        <p class="font-semibold text-gray-700">Your Answer:</p>
+                                        <p class="text-gray-600 mt-1 ${isCorrect ? 'text-green-700' : 'text-red-700'}">${answerText}</p>
+                                    </div>
+
+                                    ${!isCorrect ? `
+                                        <div>
+                                            <p class="font-semibold text-gray-700">Correct Answer:</p>
+                                            <p class="text-gray-600 mt-1 text-green-700">${correctText}</p>
+                                        </div>
+                                    ` : ''}
+
+                                    <div class="bg-blue-50 p-4 rounded-lg">
+                                        <p class="font-semibold text-gray-700 mb-2">Explanation:</p>
+                                        <p class="text-gray-700">${question.explanation}</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-8">
+                                    <button onclick="QuizApp.nextQuestion()"
+                                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200">
+                                        ${this.state.currentQuestion === this.questions.length - 1 ? 'View Results' : 'Next Question'}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            renderResults() {
+                const percentage = Math.round((this.state.score / this.state.totalPoints) * 100);
+                const passed = percentage >= 50;
+                const correctCount = this.state.score / 2;
+                const wrongCount = (this.state.totalPoints - this.state.score) / 2;
+
+                return `
+                    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+                        <div class="max-w-2xl w-full bg-white rounded-lg shadow-2xl p-8 md:p-12 fade-in">
+                            <div class="text-center mb-8">
+                                <div class="text-6xl font-bold ${passed ? 'text-green-600' : 'text-red-600'} mb-4">
+                                    ${passed ? '✓' : '✗'}
+                                </div>
+                                <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                                    ${passed ? 'Congratulations!' : 'Good Effort!'}
+                                </h1>
+                                <p class="text-2xl ${passed ? 'text-green-600' : 'text-red-600'} font-bold">
+                                    ${passed ? 'You Passed! 🎉' : 'You Need to Practice More'}
+                                </p>
+                            </div>
+
+                            <div class="space-y-6 mb-8">
+                                <div class="bg-blue-50 p-6 rounded-lg text-center">
+                                    <p class="text-gray-600 font-semibold mb-2">Final Score</p>
+                                    <p class="text-5xl font-bold text-indigo-600">${percentage}%</p>
+                                    <p class="text-gray-600 text-sm mt-2">${this.state.score} out of ${this.state.totalPoints} points</p>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="bg-green-50 p-6 rounded-lg text-center">
+                                        <p class="text-gray-600 font-semibold mb-2">Correct</p>
+                                        <p class="text-4xl font-bold text-green-600">${correctCount.toFixed(0)}</p>
+                                    </div>
+                                    <div class="bg-red-50 p-6 rounded-lg text-center">
+                                        <p class="text-gray-600 font-semibold mb-2">Incorrect</p>
+                                        <p class="text-4xl font-bold text-red-600">${wrongCount.toFixed(0)}</p>
+                                    </div>
+                                </div>
+
+                                <div class="bg-amber-50 p-6 rounded-lg">
+                                    <p class="font-semibold text-amber-800 mb-2">📌 Passing Requirement</p>
+                                    <p class="text-gray-700">You need <strong>50% or higher</strong> to pass. Your score: <strong>${percentage}%</strong></p>
+                                </div>
+
+                                <div class="bg-indigo-50 p-6 rounded-lg">
+                                    <p class="font-semibold text-indigo-800 mb-2">💡 Tip for Next Attempt</p>
+                                    <p class="text-gray-700">Review the questions you missed. Pay special attention to:</p>
+                                    <ul class="list-disc list-inside mt-2 text-gray-700 text-sm space-y-1">
+                                        <li>Multi-select questions (ALL correct answers required)</li>
+                                        <li>EVM formulas and calculations</li>
+                                        <li>Digital Strategy Framework components</li>
+                                        <li>Agile methodology concepts</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <button onclick="QuizApp.restart()"
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 mb-4">
+                                Retake Quiz
+                            </button>
+
+                            <div class="text-center text-gray-600 text-sm border-t pt-6">
+                                <p>Powered by: <strong>Ephraim I. Doherty</strong></p>
+                                <p class="text-xs mt-2 text-gray-500">SDT600 - Digital Transformation Management Practice Examination</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+
+        // Initialize app
+        QuizApp.init();
+    </script>
+</body>
+</html>
